@@ -1,0 +1,1 @@
+export { default as GuessCountry } from '@/components/GuessCountry';
