@@ -2,11 +2,13 @@ import { allCountriesApi } from "@/data/constants";
 
 
 
-export default async function getAllCountriesNames(): Promise<Array<string>> {
-    const countries = await fetch(`${allCountriesApi}?fields=name`).then(res => res.json()).then(res => {
-        const names = res.map((countryName: countryNames): string => countryName.name.official).filter(Boolean).sort((a: string, b: string) => a.localeCompare(b));
-        console.log('names', names)
-        return names;
+export default async function getAllCountriesNames(): Promise<Array<t_countryHint>> {
+    const countries = await fetch(`${allCountriesApi}?fields=name,flags`).then(res => res.json()).then((res) => {
+        const states: t_countryHint[] = res.map((item: allCountries): t_countryHint => ({
+            name: item.name.official,
+            flag: item.flags.png
+        }));
+        return states;
     });
 
     return countries;

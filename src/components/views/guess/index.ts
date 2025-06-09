@@ -1,0 +1,1 @@
+export { default as Results } from "@/parts/views/guess/Results"

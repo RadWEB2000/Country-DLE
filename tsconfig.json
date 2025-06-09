@@ -43,7 +43,13 @@
       ],
       "@/ts/*": [
         "./src/types/*"
-      ]
+      ],
+      "@/context/*": [
+        "./src/contexts/*"
+      ],
+      "@/provider/*": [
+        "./src/providers/*"
+      ],
     }
   },
   "include": [

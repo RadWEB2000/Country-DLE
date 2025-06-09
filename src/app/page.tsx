@@ -1,30 +1,29 @@
-import { GuessCountry } from "@/components";
-import getAllCountriesNames from "@/lib/getAllCountriesNames";
+import Link from "next/link";
 
 export default async function GuessCountryPage() {
 
-  const countries = await getAllCountriesNames();
-
-  console.log(countries)
-
   return (
     <main
-      className="w-[90rem] max-w-[85%] block my-8 mx-auto bg-amber-500"
+      className="w-[90rem] block my-8 mx-auto bg-amber-500/0"
     >
-      <GuessCountry countries={countries} />
-      <main>
-        {/* <ul
-          className="flex items-center justify-start gap-2 flex-wrap p-5"
-        >
-          {countries.map((item, index) => {
-            return (
-              <li className="bg-purple-200 py-1 px-2 flex items-center justify-center" key={`${item}-${index}`} >
-                {item}
-              </li>
-            )
-          })}
-        </ul> */}
-      </main>
+      <h1>Choose a game</h1>
+      <ul className="flex-flex col space-y-3 p-2">
+        <li className="cursor-pointer w-fit py-1 px-2 rounded-md bg-slate-200 duration-200 linear hover:bg-slate-100 focus:bg-slate-200">
+          <Link href="/guess">
+            Guess
+          </Link>
+        </li>
+        <li className="cursor-pointer w-fit py-1 px-2 rounded-md bg-slate-200 duration-200 linear hover:bg-slate-100 focus:bg-slate-200">
+          <Link href="#">
+            Royality
+          </Link>
+        </li>
+        <li className="cursor-pointer w-fit py-1 px-2 rounded-md bg-slate-200 duration-200 linear hover:bg-slate-100 focus:bg-slate-200">
+          <Link href="#">
+            Coat of arms
+          </Link>
+        </li>
+      </ul>
     </main>
   )
 }
