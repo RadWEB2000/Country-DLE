@@ -29,9 +29,10 @@ export default function Results() {
             <span className="h-[2px] w-full block bg-stone-900/50 rounded-md my-2 mx-auto" />
             <div className="bg-orange-60/00 w-fit mx-auto">
                 {
-                    countries?.map(({ area, carSide, continents, country, currencies, flag, independent, languages, population, postalCode, region, status, timezones, startOfWeek, subregion }) => {
+                    countries?.reverse().map(({ area, carSide, continents, country, currencies, flag, independent, languages, population, postalCode, region, status, timezones, startOfWeek, subregion }) => {
+                        console.log(languages, flag, timezones, startOfWeek)
                         return (
-                            <ul className="grid grid-cols-[repeat(12,8rem)] text-center items-center justify-center min-h-18 text-balance text-sm mt-3 nth-[odd]:bg-stone-100 rounded-md" >
+                            <ul key={`${country}-${area}-${population}`} className="grid grid-cols-[repeat(12,8rem)] text-center items-center justify-center min-h-18 text-balance text-sm mt-3 nth-[odd]:bg-stone-100 rounded-md" >
                                 <li className="font-bold" >{country}</li>
                                 <li className="flex items-center justify-center" >
                                     {independent ? <span className="bg-green-600 block w-6 h-6 rounded-md" /> : <span className="bg-red-600 block w-6 h-6 rounded-md" />}

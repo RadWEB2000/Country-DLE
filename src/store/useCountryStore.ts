@@ -19,7 +19,7 @@ const useCountryStore = create<CountryStore>()(
 
                 const isDifferentDay = new Date(lastUpdate).toDateString() !== now.toDateString();
 
-                if (!isDifferentDay) {
+                if (isDifferentDay) {
                     set({
                         countries: [newCountry],
                         lastUpdate: now.getTime(),
@@ -28,7 +28,7 @@ const useCountryStore = create<CountryStore>()(
                     const exists = get().countries.some(state => state.country === newCountry.country);
                     if (!exists) {
                         set(state => ({
-                            countries: [...state.countries, newCountry],
+                            countries: [newCountry, ...state.countries],
                             lastUpdate: now.getTime()
                         }))
                     }
