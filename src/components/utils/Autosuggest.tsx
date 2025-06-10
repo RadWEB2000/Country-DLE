@@ -7,11 +7,12 @@ type AutocompleteItem = {
         alt: string;
         src: string;
     };
+    data: t_Country_Table_Record;
 };
 
 type Props = {
     data: Array<AutocompleteItem>;
-    onSelect: (item: AutocompleteItem) => void
+    onSelect: (item: t_Country_Table_Record) => void
 }
 
 export default function Autosuggest({ data, onSelect }: Props) {
@@ -23,7 +24,7 @@ export default function Autosuggest({ data, onSelect }: Props) {
         show,
         setShow,
         containerRef
-    } = useAutocomplete(data);
+    } = useAutocomplete(data, 'country');
 
     return (
         <div className="relative w-full" ref={containerRef} >
@@ -35,10 +36,10 @@ export default function Autosuggest({ data, onSelect }: Props) {
                             results.map((item) => {
                                 return (
                                     <li
-                                        key={item.name}
+                                        key={item.country}
                                         onClick={() => {
-                                            onSelect(item);
-                                            setQuery(item.name);
+                                            onSelect(item.data);
+                                            setQuery(item.country);
                                             setShow(false);
                                         }}
                                         className="flex items-center gap-2 p-2 cursor-pointer hover:bg-stone-100"
@@ -50,7 +51,7 @@ export default function Autosuggest({ data, onSelect }: Props) {
                                             src={item.flag.src}
                                             width={40}
                                         />
-                                        <span className="capitalize">{item.name}</span>
+                                        <span className="capitalize">{item.country}</span>
                                     </li>
                                 )
                             })
