@@ -31,26 +31,26 @@ export default async function getAllCountries() {
         ...data2[index]
     }))
 
-    const countries: Array<t_Country_Table_Record> = merged.map(({ area, continents, currencies, name, population, region, timezones, car, flags, independent, languages, postalCode, startOfWeek, status, subregion }: t_Country_Table_Record_Req): t_Country_Table_Record => {
+    const countries: Array<t_Country_Table_Record> = merged.map((res: t_Country_Table_Record_Req): t_Country_Table_Record => {
         return {
-            country: name.official,
-            independent: independent,
-            area: area,
-            carSide: car ? car.side : 'left',
-            continents: continents,
-            currencies: Object.values(currencies).map((item) => item.name),
+            country: res.name.official,
+            independent: res.independent,
+            area: res.area,
+            carSide: res.car ? res.car.side : 'left',
+            continents: res.continents,
+            currencies: Object.values(res.currencies).map((item) => item.name),
             flag: {
-                alt: `${flags?.alt}`,
-                src: `${flags?.png}`
+                alt: `${res.flags?.alt}`,
+                src: `${res.flags?.png}`
             },
-            languages: languages ? Object.values(languages) : [],
-            postalCode: `${postalCode?.format}`,
-            population: population,
-            region: region,
-            subregion: `${subregion}`,
-            startOfWeek: startOfWeek ? startOfWeek : 'friday',
-            status: status,
-            timezones: timezones
+            languages: res.languages ? Object.values(res.languages) : [],
+            postalCode: `${res.postalCode?.format}`,
+            population: res.population,
+            region: res.region,
+            subregion: `${res.subregion}`,
+            startOfWeek: res.startOfWeek ? res.startOfWeek : 'friday',
+            status: res.status,
+            timezones: res.timezones
         }
     })
 
