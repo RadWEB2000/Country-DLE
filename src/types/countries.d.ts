@@ -11,14 +11,25 @@ declare global {
                 }
             }
         };
-        tld?: Array<string>;
+        tld: Array<string>;
         cca2: string;
         ccn3: string;
         cioc: string;
         independent: boolean;
         status: string;
         region: string;
-        subregion?: string;
+        demonyms: {
+            eng: {
+                f: string;
+                m: string;
+            },
+            fra: {
+                f: string;
+                m: string;
+            }
+        };
+        altSpellings: Array<string>;
+        subregion: string;
         area: number;
         unMembered: boolean;
         currencies: {
@@ -42,16 +53,16 @@ declare global {
         landlocked: boolean;
         borders: Array<string>;
         flag: string;
-        maps?: {
+        maps: {
             googleMaps: string;
             openStreetMaps: string;
         };
         population: number;
-        gini?: {
+        gini: {
             [year: string]: number;
         };
-        fifa?: string;
-        car?: {
+        fifa: string;
+        car: {
             signs: Array<string>;
             side: "left" | "right"
         };
@@ -62,18 +73,18 @@ declare global {
             svg: string;
             alt?: string;
         };
-        coatOfArms?: {
-            png?: string;
-            svg?: string;
+        coatOfArms: {
+            png: string;
+            svg: string;
         };
-        languages?: {
+        languages: {
             [langCode: string]: string;
         };
-        startOfWeek?: nameOfWeekDays;
+        startOfWeek: nameOfWeekDays;
         capitalInfo?: {
             latlng: [number, number]
         };
-        postalCode?: {
+        postalCode: {
             format: string;
             regex?: string;
         }
