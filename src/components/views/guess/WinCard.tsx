@@ -1,5 +1,9 @@
+'use client';
 import Image from "next/image";
 import { SiGooglemaps } from "react-icons/si";
+import { FaChartSimple, FaRocketchat } from "react-icons/fa6";
+import { useState } from "react";
+import { AudioPlayer } from "@/components/utils";
 
 type t_WinCard = {
     anthem: string;
@@ -22,6 +26,7 @@ type t_WinCard = {
     };
     map: string;
     timezones: Array<string>;
+    population: number;
     continents: Array<string>;
     flag: {
         alt: string;
@@ -33,10 +38,16 @@ type t_WinCard = {
     uri: string;
 }
 
-export default function WinCard({ altSpellings, anthem, area, borders, capital, coatOfArms, continents, currencies, country, description, domain, flag, genders, independent, languages, map, postalCode, region, startOfWeek, subregion, timezones, carSide, uri }: t_WinCard) {
+type tabs = 'overview' | 'government' | 'geography' | 'culture';
+
+export default function WinCard({ altSpellings, anthem, area, borders, capital, coatOfArms, continents, currencies, country, description, domain, flag, genders, independent, languages, map, postalCode, region, startOfWeek, subregion, population, timezones, carSide, uri }: t_WinCard) {
     console.log('anthem', anthem)
     // console.log('description', description)
     console.log(map.split('/')[4])
+
+    const [curretTab,changeCurrentTab] = useState<tabs>('overview');
+
+
     return (
         <>
             <section className="mx-auto mt-10 grid grid-cols-7 w-[93.5rem] bg-stone-100/0 max-w-[95vw] gap-8">
@@ -48,6 +59,9 @@ export default function WinCard({ altSpellings, anthem, area, borders, capital, 
                         }
                     </div>
                     <p className="line-clamp-6 leading-7 text-base max-w-[100ch] " >{description}</p>
+
+                    <AudioPlayer anthem={anthem} />
+
                     <ul className="items-center flex flex-row flex-wrap gap-3 mt-auto mb-0" >
                         {
                             continents.map((item) => {
@@ -93,13 +107,15 @@ export default function WinCard({ altSpellings, anthem, area, borders, capital, 
             <div
                 className="mx-auto my-5 grid grid-cols-4 w-[93.5rem] max-w-[95vw] gap-4  shadow-lg bg-slate-100/30 rounded-2xl p-4 "
             >
-                <button className="py-2 rounded-md font-bold duration-150 linear  cursor-pointer hover:bg-slate-300/50 hover:shadow-md focus:bg-slate-300/50 focus:shadow-md" >Overview</button>
-                <button className="py-2 rounded-md font-bold duration-150 linear  cursor-pointer hover:bg-slate-300/50 hover:shadow-md focus:bg-slate-300/50 focus:shadow-md" >Goverment</button>
-                <button className="py-2 rounded-md font-bold duration-150 linear  cursor-pointer hover:bg-slate-300/50 hover:shadow-md focus:bg-slate-300/50 focus:shadow-md" >Geography</button>
-                <button className="py-2 rounded-md font-bold duration-150 linear  cursor-pointer hover:bg-slate-300/50 hover:shadow-md focus:bg-slate-300/50 focus:shadow-md" >Culture & Practical</button>
+                <button onClick={() => changeCurrentTab('overview')} className="py-2 rounded-md font-bold duration-150 linear  cursor-pointer hover:bg-slate-300/50 hover:shadow-md focus:bg-slate-300/50 focus:shadow-md" >Overview</button>
+                <button onClick={() => changeCurrentTab('government')} className="py-2 rounded-md font-bold duration-150 linear  cursor-pointer hover:bg-slate-300/50 hover:shadow-md focus:bg-slate-300/50 focus:shadow-md" >Goverment</button>
+                <button onClick={() => changeCurrentTab('geography')} className="py-2 rounded-md font-bold duration-150 linear  cursor-pointer hover:bg-slate-300/50 hover:shadow-md focus:bg-slate-300/50 focus:shadow-md" >Geography</button>
+                <button  onClick={() => changeCurrentTab('culture')} className="py-2 rounded-md font-bold duration-150 linear  cursor-pointer hover:bg-slate-300/50 hover:shadow-md focus:bg-slate-300/50 focus:shadow-md" >Culture & Practical</button>
             </div>
             {/* Overview */}
-            <div className="mx-auto mt-5 grid grid-cols-9 w-[93.5rem] bg-stone-100/0 max-w-[95vw] gap-8">
+            {
+                curretTab === 'overview' &&
+                 <div className="mx-auto mt-5 grid grid-cols-9 w-[93.5rem] bg-stone-100/0 max-w-[95vw] gap-8">
                 <div
                     className="col-span-3 rounded-md border-2 border-slate-900/0 shadow-md p-4"
                 >
@@ -117,7 +133,52 @@ export default function WinCard({ altSpellings, anthem, area, borders, capital, 
                         <li className="bg-sky-400/0 flex items-center justify-between" ><strong>Capital</strong> <p>{capital}</p></li>
                         <li className="bg-sky-400/0 flex items-center justify-between" ><strong>Subregion</strong> <p>{subregion}</p></li>
                         <li className="bg-sky-400/0 flex items-center justify-between" ><strong>Region</strong> <p>{region}</p></li>
-                        <li className="bg-sky-400/0 flex items-center justify-between" ><strong>Continent</strong> <p>{continents.join(', ')}</p></li>
+                        <li className="bg-sky-400/0 flex items-center justify-between" ><strong>Area</strong> <p>{area}</p></li>
+                        {
+                            borders &&
+                            <li className="bg-sky-400/0 flex items-center justify-between" ><strong>Border</strong> <p>{borders}</p></li>
+                        }
+                    </ul>
+                </div>
+                 <div
+                    className="col-span-3 rounded-md border-2 border-slate-900/0 shadow-md p-4"
+                >
+                    <div
+                        className="flex items-center justify-start font-semibold text-2xl gap-2 mb-6 text-slate-500"
+                    >
+                        <i>
+                            <FaRocketchat />
+                        </i>
+                        <span>
+                           Trivia
+                        </span>
+                    </div>
+                    <ul className="bg-orange-200/0 w-full space-y-3" >
+                        <li className="bg-sky-400/0 flex items-center justify-between" ><strong>Alternative spellings</strong> <p className="text-end">{altSpellings}</p></li>
+                        <li className="bg-sky-400/0 flex items-center justify-between" ><strong>Currencies</strong> <p>{currencies}</p></li>
+                        <li className="bg-sky-400/0 flex items-center justify-between" ><strong>Domain</strong> <p>.{domain.toLowerCase()}</p></li>
+                        <li className="bg-sky-400/0 flex items-center justify-between" ><strong>Start of week</strong> <p className="capitalize" >{startOfWeek}</p></li>
+                        <li className="bg-sky-400/0 flex items-center justify-between" ><strong>Car side</strong> <p className="capitalize"  >{carSide}</p></li>
+                    </ul>
+                </div>
+                 <div
+                    className="col-span-3 rounded-md border-2 border-slate-900/0 shadow-md p-4"
+                >
+                    <div
+                        className="flex items-center justify-start font-semibold text-2xl gap-2 mb-6 text-slate-500"
+                    >
+                        <i>
+                            <FaChartSimple />
+                        </i>
+                        <span>
+                            Statistics
+                        </span>
+                    </div>
+                    <ul className="bg-orange-200/0 w-full space-y-3" >
+                        <li className="bg-sky-400/0 flex items-center justify-between" ><strong>Area</strong> <p className="text-end">`{area} `m<sup>2</sup></p></li>
+                        <li className="bg-sky-400/0 flex items-center justify-between" ><strong>Population</strong> <p>{population}</p></li>
+                        <li className="bg-sky-400/0 flex items-center justify-between" ><strong>Domain</strong> <p>.{domain.toLowerCase()}</p></li>
+                        <li className="bg-sky-400/0 flex items-center justify-between" ><strong>Start of week</strong> <p className="capitalize" >{startOfWeek}</p></li>
                         {
                             borders &&
                             <li className="bg-sky-400/0 flex items-center justify-between" ><strong>Border</strong> <p>{borders}</p></li>
@@ -125,6 +186,13 @@ export default function WinCard({ altSpellings, anthem, area, borders, capital, 
                     </ul>
                 </div>
             </div>
+            }
+           {
+            curretTab === 'geography' &&
+            <div className="mx-auto mt-5 grid grid-cols-9 w-[93.5rem] bg-stone-100/0 max-w-[95vw] gap-8">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10177899.313716844!2d8.59280286902662!3d51.47947499381935!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47009964a4640bbb%3A0x97573ca49cc55ea!2sPolska!5e0!3m2!1spl!2spl!4v1749895692054!5m2!1spl!2spl" width="600" height="450"  loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="col-span-full w-full rounded-lg shadow-md  " />
+            </div>
+           }
 
             {/* <section
                 className="grid grid-cols-[200px_1fr] bg-green-200/0 w-[85%] mx-auto rounded-2xl px-12 py=6"

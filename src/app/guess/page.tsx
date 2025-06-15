@@ -7,7 +7,7 @@ import getWinningCountry from '@/lib/functions/getWinningCountry';
 export default async function GuessCountryPage() {
 
   const countries = await getAllCountries();
-  const country = await getWinningCountry('poland')
+  const country = await getWinningCountry('russia');
 
   return (
     <CountrySelectedProvider>

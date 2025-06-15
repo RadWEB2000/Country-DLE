@@ -62,6 +62,7 @@ type t_GetWinningCountry = {
         capital: string;
         altSpellings: string;
         region: string;
+        population: number;
         subregion: string;
         languages: Array<string>;
         borders: string;
@@ -87,7 +88,7 @@ type t_GetWinningCountry = {
 export default async function getWinningCountry(state: string): Promise<t_GetWinningCountry> {
 
     // country row
-    const { altSpellings, area, borders, capital, carSide, cca2, coatOfArms, continents, country, currencies, flag, genders, independent, languages, map, population, postalCode, region, status, timezones, uri, startOfWeek, subregion }: t_CountryDetails = await fetch(`${singleCountryApi}${state}`).then(res => res.json()).then((res: Array<t_Country>): t_CountryDetails => {
+    const { altSpellings, area, borders, capital, carSide, cca2, coatOfArms, continents, country, currencies, flag, genders, independent, languages, map, population, postalCode, region,  timezones, uri, startOfWeek, subregion }: t_CountryDetails = await fetch(`${singleCountryApi}${state}`).then(res => res.json()).then((res: Array<t_Country>): t_CountryDetails => {
         const state = res[0];
         return {
             area: state.area,
@@ -125,6 +126,16 @@ export default async function getWinningCountry(state: string): Promise<t_GetWin
     })
     const anthem = `https://nationalanthems.info/${cca2.toLowerCase()}.mp3`
 
+    // const restful = await fetch(`https://restfulcountries.com/api/v1/countries/${state}/presidents`,{
+    //     headers:{
+    //         'Content-Type': 'application/json',
+    //         'Accept': 'application/json'    ,
+    //         'Authorization': `Bearer ${restfulCountriesApiKey}`,
+    //     }
+    // }).then(res => res.json()).then(res => res);
+
+    // console.log(`restul: `, restful);
+
     const results: t_GetWinningCountry = {
         row: {
             area, carSide, continents, country, currencies, flag, independent, languages, population, postalCode, region, startOfWeek, subregion, timezones, uri
@@ -141,11 +152,11 @@ export default async function getWinningCountry(state: string): Promise<t_GetWin
             continents,
             currencies,
             description: wikiDetails,
+            population,
             domain: cca2,
             flag, genders,
             independent, languages, map, postalCode, region, startOfWeek, subregion, timezones, uri
         }
     }
-    console.log('anthem', results.card.anthem)
     return results;
 }
