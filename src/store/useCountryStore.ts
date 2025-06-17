@@ -2,8 +2,8 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 type CountryStore = {
-    countries: Array<t_Country_Table_Record>;
-    addCountry: (country: t_Country_Table_Record) => void;
+    countries: Array<T_Country_Single>;
+    addCountry: (country: T_Country_Single) => void;
     lastUpdate: number;
     checkAndReset: () => void;
 }

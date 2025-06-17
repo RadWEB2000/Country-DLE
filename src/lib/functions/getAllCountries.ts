@@ -1,58 +1,51 @@
-import { allCountriesApi } from "@/data/constants";
-
 export default async function getAllCountries() {
-
-    const allowedFields: Array<string> = [
-        'name',
-        'independent',
-        'currencies',
-        'region',
-        'subregion',
-        'languages',
-        'area',
-        'population',
-        'timezones',
-        'continents',
-        'flags',
-        'startOfWeek',
-        'postalCode',
-        'car',
-    ]
-
-    const [res1, res2] = await Promise.all([
-        fetch(`${allCountriesApi}?fields=${allowedFields.slice(0, 10).join(',')}`),
-        fetch(`${allCountriesApi}?fields=${allowedFields.slice(10).join(',')}`)
+    const [response1, response2] = await Promise.all([
+        fetch(`${process.env.ALL_COUNTRIES_API}?fields=continents,subregion,region,borders,gini`),
+        fetch(`${process.env.ALL_COUNTRIES_API}?fields=name,independent,currencies,languages,area,population,timezones,flags,startOfWeek,car`)
     ])
-
-    const [data1, data2] = await Promise.all([res1.json(), res2.json()]);
-
-    const merged: Array<t_Country> = data1.map((country: countryRow, index: number) => ({
-        ...country,
+    const [data1, data2] = await Promise.all([response1.json(), response2.json()]);
+    const merged: Array<T_Country_Merged> = data1.map((item: T_Country_Merged, index: number) => ({
+        ...item,
         ...data2[index]
     }))
-
-    const countries: Array<t_Country_Table_Record> = merged.map((res: t_Country_Table_Record_Req): t_Country_Table_Record => {
+    const countries: Array<T_Country_Single> = merged.map((item: T_Country_Merged): T_Country_Single => {
         return {
-            country: res.name.official,
-            independent: res.independent,
-            area: res.area,
-            carSide: res.car ? res.car.side : 'left',
-            continents: res.continents,
-            currencies: Object.values(res.currencies).map((item) => item.name),
-            flag: {
-                alt: `${res.flags?.alt}`,
-                src: `${res.flags?.png}`
+            country: {
+                flag: {
+                    alt: item.flags.alt,
+                    src: item.flags.png
+                },
+                name: {
+                    common: item.name.common,
+                    official: item.name.official
+                },
+                independent: {
+                    status: item.independent,
+                    description: item.independent ? 'Independent' : 'Dependent'
+                }
             },
-            languages: res.languages ? Object.values(res.languages) : [],
-            postalCode: `${res.postalCode?.format}`,
-            population: res.population,
-            region: res.region,
-            subregion: `${res.subregion}`,
-            startOfWeek: res.startOfWeek ? res.startOfWeek : 'friday',
-            status: res.status,
-            timezones: res.timezones
+            geo: {
+                continents: item.continents.join(', '),
+                region: item.region,
+                subregion: item.subregion,
+                timezones: item.timezones.join(', '),
+                borders: item.borders.join(', ') ?? 'unknown',
+                area: item.area
+            },
+            economy: {
+                gini: Object.values(item.gini)[0] ?? 0,
+                currencies: Object.values(item.currencies).map(item => item.name).join(', '),
+                population: item.population,
+            },
+            culture: {
+                languages: Object.values(item.languages).join(', '),
+                startOfWeek: item.startOfWeek,
+                car: {
+                    side: item.car.side,
+                    signs: item.car.signs.join(', ')
+                }
+            }
         }
     })
-
     return countries;
 }
