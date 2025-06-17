@@ -1,9 +1,9 @@
 'use client';
-import { MdPause , MdPlayArrow} from "react-icons/md";
+import { MdPause, MdPlayArrow } from "react-icons/md";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 
-export default function AudioPlayer({anthem}:{anthem:string}) {
+export default function AudioPlayer({ anthem }: { anthem: string }) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -54,7 +54,7 @@ export default function AudioPlayer({anthem}:{anthem:string}) {
           onClick={togglePlay}
           className="text-white h-[50px] w-[50px] cursor-pointer flex items-center justify-center text-2xl duration-200 linear bg-slate-500 hover:bg-slate-600 rounded-full"
         >
-          {isPlaying ? <MdPause/> : <MdPlayArrow/>}
+          {isPlaying ? <MdPause /> : <MdPlayArrow />}
         </button>
         <div className="flex-1">
           <input
