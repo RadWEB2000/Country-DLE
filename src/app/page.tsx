@@ -13,7 +13,7 @@ export default async function GuessCountryPage() {
     <CountrySelectedProvider>
       <SearchAutocomplete countries={countries} />
       <main
-        className="flex items-center flex-col justify-center my-8 mx-auto bg-amber-500/0"
+        className="flex items-center flex-col justify-center my-8 mx-auto"
       >
         <Table country={win_country} />
       </main>
