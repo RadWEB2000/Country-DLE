@@ -1,4 +1,4 @@
-export default async function getAllCountries() {
+export default async function getAllCountries(): Promise<Array<T_Country_Single>> {
     const [response1, response2] = await Promise.all([
         fetch(`${process.env.ALL_COUNTRIES_API}?fields=continents,subregion,region,borders,gini`),
         fetch(`${process.env.ALL_COUNTRIES_API}?fields=name,independent,currencies,languages,area,population,timezones,flags,startOfWeek,car`)
