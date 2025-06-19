@@ -7,7 +7,7 @@ export default async function GuessCountryPage() {
 
   const countries = (await getAllCountries());
   const win = await getWinningCountry();
-  console.log('win', win)
+  console.log(win, win)
 
   return (
     <CountrySelectedProvider>
@@ -24,14 +24,14 @@ export default async function GuessCountryPage() {
 
         <p>
           Have you ever dreamed of traveling around the world without leaving your home?
-          Are you fascinated by geography, flags, capitals, and country shapes? Or maybe you're a fan of puzzles,
+          Are you fascinated by geography, flags, capitals, and country shapes? Or maybe youre a fan of puzzles,
           word games, and brain teasers? If you answered yes to any of those questions,
           the <strong>Countries DLE</strong> app is made for you.
         </p>
 
         <p>
           <strong>Countries DLE</strong> is an innovative game inspired by the popular Wordle format — but instead
-          of guessing words, you're challenged to guess <strong>country names</strong>. Each day, you get
+          of guessing words, youre challenged to guess <strong>country names</strong>. Each day, you get
           <strong>one chance</strong> to solve a geographic riddle. Simple in concept, but surprisingly addictive,
           this app has become a favorite among students, teachers, and adults looking for smart entertainment
           and a daily mental workout.
@@ -51,7 +51,7 @@ export default async function GuessCountryPage() {
         </ul>
 
         <p>
-          It’s not just a game — it’s also a <strong>learning experience</strong>, helping to improve your
+          Its not just a game — its also a <strong>learning experience</strong>, helping to improve your
           geographic awareness and spatial reasoning. With each daily challenge, your knowledge of the world grows,
           and playing becomes a rewarding habit.
         </p>
