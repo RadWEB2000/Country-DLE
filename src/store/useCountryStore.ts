@@ -3,7 +3,10 @@ import { persist } from "zustand/middleware";
 
 type CountryStore = {
     countries: Array<T_Country_Single>;
-    addCountry: (country: T_Country_Single) => void;
+    addCountry: (country: T_Country_Single, dailyId: string) => void;
+    setDailyId: (id: string) => void;
+    checkDailyId: (id: string) => void;
+    currentDailyId: string;
     lastUpdate: number;
     checkAndReset: () => void;
 }
@@ -13,25 +16,37 @@ const useCountryStore = create<CountryStore>()(
         (set, get) => ({
             countries: [],
             lastUpdate: Date.now(),
-            addCountry: (newCountry) => {
-                const now = new Date();
-                const { lastUpdate } = get();
+            currentDailyId: '',
+            setDailyId: (id) => set({ currentDailyId: id, countries: [] }),
+            checkDailyId: id => {
+                if (get().currentDailyId !== id) {
+                    set({
+                        currentDailyId: id,
+                        countries: []
+                    })
+                }
+            },
+            addCountry: (newCountry, dailyId) => {
+                const { currentDailyId, countries } = get();
 
-                const isDifferentDay = new Date(lastUpdate).toDateString() !== now.toDateString();
-
-                if (isDifferentDay) {
+                // jeśli losowanie się zmieniło — resetuj store
+                if (currentDailyId !== dailyId) {
                     set({
                         countries: [newCountry],
-                        lastUpdate: now.getTime(),
+                        currentDailyId: dailyId
                     });
-                } else {
-                    const exists = get().countries.some(state => state.country === newCountry.country);
-                    if (!exists) {
-                        set(state => ({
-                            countries: [newCountry, ...state.countries],
-                            lastUpdate: now.getTime()
-                        }))
-                    }
+                    return;
+                }
+
+                const exists = countries.some(
+                    (state) => state.country.name.official === newCountry.country.name.official
+                );
+
+                if (!exists) {
+                    set({
+                        countries: [newCountry, ...countries],
+                        currentDailyId: dailyId
+                    });
                 }
             },
             checkAndReset: () => {

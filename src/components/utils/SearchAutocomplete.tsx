@@ -1,6 +1,5 @@
 "use client"
 import { Autosuggest } from "@/parts/utils";
-import { IoAdd as AddIcon } from "react-icons/io5";
 import { useCountryStore } from "@/store";
 
 export default function SearchAutocomplete({ countries: states }: { countries: Array<T_Country_Single> }) {
@@ -28,9 +27,6 @@ export default function SearchAutocomplete({ countries: states }: { countries: A
                         })}
                         onSelect={country => handleSelect(country)}
                     />
-                    <button className="items-center cursor-pointer bg-stone-200 rounded-md col-span-1 justify-center flex text-5xl h-10 w-10 mx-auto" type="submit">
-                        <AddIcon className="" />
-                    </button>
                 </form>
             </div>
         </>

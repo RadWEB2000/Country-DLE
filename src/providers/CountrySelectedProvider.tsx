@@ -1,6 +1,8 @@
 "use client"
 import { CountrySelectedContext } from "@/contexts";
-import { useState } from "react";
+import { getWinningCountry } from "@/lib/functions";
+import { useCountryStore } from "@/store";
+import { useEffect, useState } from "react";
 
 export default function CountrySelectedProvider({
     children,
@@ -18,7 +20,22 @@ export default function CountrySelectedProvider({
         })
     }
 
-    console.log(countriesList)
+    const setDailyId = useCountryStore((state) => state.setDailyId);
+    const currentDailyId = useCountryStore((state) => state.currentDailyId);
+
+    useEffect(() => {
+        const init = async () => {
+            const win = await getWinningCountry();
+            const newId = win.country.name.official;
+
+            if (currentDailyId !== newId) {
+                // Reset przez addCountry z nowym dailyId
+                setDailyId(newId);
+            }
+        };
+
+        init();
+    }, [currentDailyId, setDailyId]);
 
     return (
         <CountrySelectedContext.Provider
