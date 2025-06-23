@@ -10,9 +10,13 @@ export default function CountrySelectedProvider({
     children: React.ReactNode;
 }>) {
 
-    const [countriesList, updateCountriesList] = useState<Array<t_Country_Table_Record>>([]);
+    const [countriesList, updateCountriesList] = useState<Array<T_Country_Single>>([]);
+    const setDailyId = useCountryStore((state) => state.setDailyId);
+    const reset = useCountryStore((state) => state.checkAndReset);
+    const currentDailyId = useCountryStore((state) => state.currentDailyId);
 
-    function updateCountries(newCountry: t_Country_Table_Record) {
+
+    function updateCountries(newCountry: T_Country_Single) {
         updateCountriesList((prev) => {
             const exists = prev.some((country) => country.country == newCountry.country);
             if (exists) return prev;
@@ -20,8 +24,7 @@ export default function CountrySelectedProvider({
         })
     }
 
-    const setDailyId = useCountryStore((state) => state.setDailyId);
-    const currentDailyId = useCountryStore((state) => state.currentDailyId);
+
 
     useEffect(() => {
         const init = async () => {
@@ -36,6 +39,10 @@ export default function CountrySelectedProvider({
 
         init();
     }, [currentDailyId, setDailyId]);
+
+    useEffect(() => {
+        reset(); // ← czyść localStorage, jeśli dzień się zmienił
+    }, []);
 
     return (
         <CountrySelectedContext.Provider

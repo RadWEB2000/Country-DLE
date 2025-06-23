@@ -5,9 +5,10 @@ import { useCountryStore } from "@/store";
 export default function SearchAutocomplete({ countries: states }: { countries: Array<T_Country_Single> }) {
 
     const addCountry = useCountryStore((state) => state.addCountry);
+    const daily = useCountryStore(state => state.currentDailyId)
 
     function handleSelect(country: T_Country_Single) {
-        addCountry(country);
+        addCountry(country, daily);
     }
 
     return (
