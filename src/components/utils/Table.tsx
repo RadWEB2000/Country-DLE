@@ -2,7 +2,6 @@
 import compareCountries from "@/lib/functions/compareCountries"
 import TableRecord from "./TableRecord"
 import { useCountryStore } from "@/store";
-import { AnimatePresence, motion } from "framer-motion"
 
 export default function Table({ country }: { country: T_Country_Single }) {
 
