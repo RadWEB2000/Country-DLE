@@ -34,11 +34,8 @@ export default function Table({ country }: { country: T_Country_Single }) {
             {
                 countries.map(({ country: state, culture, economy, geo }) => {
 
-                    const isWin = useMemo(() => {
-                        return countries.some((c) =>
-                            c.country.name.official === country.country.name.official
-                        );
-                    }, [countries, country]);
+                    const isWin = state.name.official === country.country.name.official;
+
 
                     console.log(`isWin ${isWin} Country ${state.name.common}`)
 
