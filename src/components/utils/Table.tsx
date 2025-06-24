@@ -1,11 +1,17 @@
 "use client"
 import compareCountries from "@/lib/functions/compareCountries"
 import TableRecord from "./TableRecord"
-import { useCountryStore } from "@/store";
+import { useCountryStore, useStatisticsStore } from "@/store";
+import { useEffect, useMemo } from "react";
 
 export default function Table({ country }: { country: T_Country_Single }) {
 
-    const countries = useCountryStore(state => state.countries);
+
+    const dailyId = new Date().toISOString().slice(0, 10);
+
+    const { addScore } = useStatisticsStore();
+
+    const { countries } = useCountryStore();
 
     return (
         <div className="w-[100rem] max-w-[95%] mx-auto relative cursor-default select-none" >
@@ -28,7 +34,19 @@ export default function Table({ country }: { country: T_Country_Single }) {
             {
                 countries.map(({ country: state, culture, economy, geo }) => {
 
-                    const isWin = () => country.country.name.official === state.name.official;
+                    const isWin = useMemo(() => {
+                        return countries.some((c) =>
+                            c.country.name.official === country.country.name.official
+                        );
+                    }, [countries, country]);
+
+                    console.log(`isWin ${isWin} Country ${state.name.common}`)
+
+                    useEffect(() => {
+                        if (isWin) {
+                            addScore(dailyId);
+                        }
+                    }, [isWin, addScore, dailyId]);
 
                     const compared = compareCountries(country, {
                         country: {
@@ -49,7 +67,7 @@ export default function Table({ country }: { country: T_Country_Single }) {
                     return (
                         <TableRecord
                             compared={compared}
-                            isWin={isWin()}
+                            isWin={isWin}
                             area={geo.area}
                             borders={geo.borders}
                             continents={geo.continents}

@@ -38,7 +38,7 @@ export default function TableRecord({ compared, area, borders, continents, curre
                     quality={25}
                     src={flag.src}
                 />
-                <h3 className="text-sm mt-1.5 font-bold" >{title}</h3>
+                <strong className="text-sm mt-1.5 font-bold" >{title}</strong>
             </li>
             <li className="cell !text-2xl" data-compare={compared.independent}>
                 {isIndependent ? <ImCheckmark /> : <ImCross />}
