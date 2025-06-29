@@ -1,24 +1,25 @@
 import { CountrySelectedProvider } from '@/providers';
 import Table from '@/components/utils/Table';
-import { SearchAutocomplete, Statistics } from '@/components/utils';
+import { Hints, SearchAutocomplete, Statistics } from '@/components/utils';
 import { getAllCountries, getWinningCountry } from '@/lib/functions';
 
 export default async function GuessCountryPage() {
 
   const countries = (await getAllCountries());
   const win = await getWinningCountry();
-  // console.log(win, win)
+  console.log('win', win)
 
   return (
     <CountrySelectedProvider>
       <Statistics />
+      <Hints attempts={17} />
       <SearchAutocomplete countries={countries} />
       <main
         className="flex items-center flex-col justify-center my-8 mx-auto"
       >
         <Table country={win} />
       </main>
-      <article
+      {/* <article
         className='mx-auto w-[80rem] max-w-[90%] text-slate-200 prose'
       >
         <h1>Countries DLE – A Geography Word Game for Travel Lovers and Puzzle Fans</h1>
@@ -125,7 +126,7 @@ export default async function GuessCountryPage() {
           So if you want to test your world knowledge, take on daily puzzles, and discover something new every day —
           <strong>Countries DLE is waiting for you</strong>.
         </p>
-      </article>
+      </article> */}
     </CountrySelectedProvider>
   )
 }

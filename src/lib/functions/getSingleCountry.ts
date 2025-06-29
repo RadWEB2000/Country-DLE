@@ -3,6 +3,7 @@ export default async function getSingleCountry(nation: string) {
         fetch(`${process.env.SINGLE_COUNTRY_API}${nation}?fields=continents,subregion,region,borders,gini`),
         fetch(`${process.env.SINGLE_COUNTRY_API}${nation}?fields=name,independent,currencies,languages,area,population,timezones,flags,startOfWeek,car`)
     ])
+    console.log(`single country ${process.env.SINGLE_CUNTRY_API}`)
     const [data1, data2] = await Promise.all([response1.json(), response2.json()]);
     const merged: T_Country_Merged = data1.map((merged: T_Country_Merged, index: number) => ({
         ...merged,

@@ -5,6 +5,7 @@ import { persist } from "zustand/middleware";
 type T_StatisticsStore = {
     score: number;
     addScore: (dailyId: string) => void;
+    alreadyScored: (dailyId: string) => boolean;
     lastScoredId: string;
     resetScore: () => void;
 }
@@ -21,6 +22,9 @@ const useStatisticsStore = create<T_StatisticsStore>()(
                         lastScoredId: dailyId
                     }));
                 }
+            },
+             alreadyScored: (dailyId: string) => {
+                return get().lastScoredId === dailyId;
             },
             resetScore: () => set({ score: 0, lastScoredId: '' }),
         }),

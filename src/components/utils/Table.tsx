@@ -2,16 +2,26 @@
 import compareCountries from "@/lib/functions/compareCountries"
 import TableRecord from "./TableRecord"
 import { useCountryStore, useStatisticsStore } from "@/store";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 
 export default function Table({ country }: { country: T_Country_Single }) {
 
 
     const dailyId = new Date().toISOString().slice(0, 10);
 
-    const { addScore } = useStatisticsStore();
+    const { addScore, alreadyScored } = useStatisticsStore();
 
     const { countries } = useCountryStore();
+
+     useEffect(() => {
+    const hasCorrectCountry = countries.some(
+      (c) => c.country.name.official === country.country.name.official
+    );
+
+    if (hasCorrectCountry && !alreadyScored(dailyId)) {
+      addScore(dailyId);
+    }
+  }, [countries, country, dailyId, addScore, alreadyScored]);
 
     return (
         <div className="w-[100rem] max-w-[95%] mx-auto relative cursor-default select-none" >
@@ -39,11 +49,11 @@ export default function Table({ country }: { country: T_Country_Single }) {
 
                     console.log(`isWin ${isWin} Country ${state.name.common}`)
 
-                    useEffect(() => {
-                        if (isWin) {
-                            addScore(dailyId);
-                        }
-                    }, [isWin, addScore, dailyId]);
+                    // useEffect(() => {
+                    //     if (isWin) {
+                    //         addScore(dailyId);
+                    //     }
+                    // }, [isWin, addScore, dailyId]);
 
                     const compared = compareCountries(country, {
                         country: {

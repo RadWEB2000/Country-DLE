@@ -6,3 +6,4 @@ export { default as AudioPlayer } from "@/parts/utils/AudioPlayer"
 
 export { default as TableRecord } from "@/parts/utils/TableRecord"
 export { default as Statistics } from "@/parts/utils/Statistics"
+export {default as Hints} from "@/parts/utils/Hints"
