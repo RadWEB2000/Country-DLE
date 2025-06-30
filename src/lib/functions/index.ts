@@ -5,3 +5,4 @@ export { default as compareStringArrays } from "@/lib/functions/compareStringArr
 export { default as vectorComparison } from "@/lib/functions/vectorComparison"
 export { default as getDailyCountry } from "@/lib/functions/getDailyCountry"
 export { default as getWinningCountry } from "@/lib/functions/getWinningCountry"
+export { default as WinCountry } from "@/parts/utils/WinCountry"

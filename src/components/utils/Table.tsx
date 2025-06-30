@@ -49,6 +49,7 @@ export default function Table({ country }: { country: T_Country_Single }) {
                     const compared = compareCountries(country, {
                         country: {
                             anthem: state.anthem,
+                            description: state.description,
                             coatOfArms: state.coatOfArms,
                             flag: state.flag,
                             independent: state.independent,
