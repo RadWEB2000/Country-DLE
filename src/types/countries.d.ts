@@ -102,11 +102,13 @@ declare global {
             name: {
                 common: string;
                 official: string;
+                translations: string;
+                altSpellings: string;
             };
             independent: {
                 status: boolean;
                 description: string;
-            }
+            };
         };
         geo: {
             continents: string;
@@ -115,6 +117,8 @@ declare global {
             timezones: string;
             borders: string;
             area: number;
+            latlng: Array<number>;
+            capital: string;
         };
         economy: {
             gini: number;
@@ -123,7 +127,12 @@ declare global {
         };
         culture: {
             languages: string;
+            demonyms: {
+                f: string;
+                m: string;
+            };
             startOfWeek: nameOfWeekDays;
+            fifa: string;
             car: {
                 side: carSide;
                 signs: string;
@@ -135,6 +144,26 @@ declare global {
         region: string;
         subregion: string;
         cca2: string;
+        capital: Array<string>;
+        fifa: string;
+        translations: {
+            [langCode: string]: {
+                official: string;
+                common: string;
+            }
+        };
+        demonyms: {
+            eng: {
+                f: string;
+                m: string;
+            },
+            fra: {
+                f: string;
+                m: string;
+            }
+        };
+        altSpellings: Array<string>;
+        latlng: [number, number];
         coatOfArms: {
             png: string;
             svg: string;

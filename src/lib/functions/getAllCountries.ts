@@ -1,12 +1,14 @@
 export default async function getAllCountries(): Promise<Array<T_Country_Single>> {
-    const [response1, response2] = await Promise.all([
+    const [response1, response2, response3] = await Promise.all([
         fetch(`${process.env.ALL_COUNTRIES_API}?fields=continents,subregion,region,borders,gini,cca2,coatOfArms`),
+        fetch(`${process.env.ALL_COUNTRIES_API}?fields=capital,latlng,altSpellings,demonyms,translations,fifa`),
         fetch(`${process.env.ALL_COUNTRIES_API}?fields=name,independent,currencies,languages,area,population,timezones,flags,startOfWeek,car`)
     ])
-    const [data1, data2] = await Promise.all([response1.json(), response2.json()]);
+    const [data1, data2, data3] = await Promise.all([response1.json(), response2.json(), response3.json()]);
     const merged: Array<T_Country_Merged> = data1.map((item: T_Country_Merged, index: number) => ({
         ...item,
-        ...data2[index]
+        ...data2[index],
+        ...data3[index]
     }))
 
 
@@ -33,7 +35,9 @@ export default async function getAllCountries(): Promise<Array<T_Country_Single>
                     },
                     name: {
                         common: item.name.common,
-                        official: item.name.official
+                        official: item.name.official,
+                        altSpellings: item.altSpellings.join(', '),
+                        translations: Object.values(item.translations).map(item => item.official).join(', '),
                     },
                     independent: {
                         status: item.independent,
@@ -42,6 +46,8 @@ export default async function getAllCountries(): Promise<Array<T_Country_Single>
                 },
                 geo: {
                     continents: item.continents.join(', '),
+                    capital: item.capital.join(', '),
+                    latlng: item.latlng,
                     region: item.region,
                     subregion: item.subregion,
                     timezones: item.timezones.join(', '),
@@ -56,6 +62,8 @@ export default async function getAllCountries(): Promise<Array<T_Country_Single>
                 culture: {
                     languages: Object.values(item.languages).join(', '),
                     startOfWeek: item.startOfWeek,
+                    fifa: item.fifa,
+                    demonyms: item.demonyms.eng,
                     car: {
                         side: item.car.side,
                         signs: item.car.signs.join(', ')

@@ -58,7 +58,9 @@ export default function Table({ country }: { country: T_Country_Single }) {
                         culture: {
                             car: culture.car,
                             languages: culture.languages,
-                            startOfWeek: culture.startOfWeek
+                            startOfWeek: culture.startOfWeek,
+                            demonyms: culture.demonyms,
+                            fifa: culture.fifa
                         },
                         economy,
                         geo
