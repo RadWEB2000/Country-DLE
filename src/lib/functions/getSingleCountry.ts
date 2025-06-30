@@ -9,10 +9,12 @@ export default async function getSingleCountry(nation: string) {
         ...merged,
         ...data2[index]
     }))[0]
+
     const country: T_Country_Single = {
         country: {
             anthem: `${process.env.ANTHEM_API}${merged.cca2.toLowerCase()}.mp3`,
             coatOfArms: merged.coatOfArms.png,
+            description: await fetch(`${process.env.SHORT_DESCRIPTION_API}${merged.name.common}`).then(res => res.json()).then(res => `${Object.values(res.query.pages)[0]}`),
             flag: {
                 alt: merged.flags.alt,
                 src: merged.flags.png

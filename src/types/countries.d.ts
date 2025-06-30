@@ -94,6 +94,7 @@ declare global {
         country: {
             anthem: string;
             coatOfArms: string;
+            description: string;
             flag: {
                 alt: string;
                 src: string;
