@@ -39,7 +39,7 @@ export default function Autosuggest({ data, onSelect }: Props) {
                                         key={item.country}
                                         onClick={() => {
                                             onSelect(item.data);
-                                            setQuery(item.country);
+                                            setQuery('');
                                             setShow(false);
                                         }}
                                         className="flex items-center gap-2 p-2 cursor-pointer hover:bg-slate-300"

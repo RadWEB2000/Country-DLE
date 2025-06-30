@@ -24,15 +24,12 @@ export default function CountrySelectedProvider({
         })
     }
 
-
-
     useEffect(() => {
         const init = async () => {
             const win = await getWinningCountry();
             const newId = win.country.name.official;
 
             if (currentDailyId !== newId) {
-                // Reset przez addCountry z nowym dailyId
                 setDailyId(newId);
             }
         };
@@ -41,7 +38,7 @@ export default function CountrySelectedProvider({
     }, [currentDailyId, setDailyId]);
 
     useEffect(() => {
-        reset(); // ← czyść localStorage, jeśli dzień się zmienił
+        reset();
     }, []);
 
     return (

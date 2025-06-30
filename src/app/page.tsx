@@ -7,7 +7,7 @@ export default async function GuessCountryPage() {
 
   const countries = (await getAllCountries());
   const win = await getWinningCountry();
-  console.log('win', win)
+  // console.log('win', win)
 
   return (
     <CountrySelectedProvider>

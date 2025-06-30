@@ -4,14 +4,7 @@ import { useCountryStore } from "@/store";
 
 export default function SearchAutocomplete({ countries: states }: { countries: Array<T_Country_Single> }) {
 
-    const addCountry = useCountryStore((state) => state.addCountry);
-    const daily = useCountryStore(state => state.currentDailyId)
-
-    function handleSelect(country: T_Country_Single) {
-        addCountry(country, daily);
-    }
-
-    const nations = states;
+    const { addCountry, currentDailyId: daily, countries } = useCountryStore();
 
     return (
         <>
@@ -21,14 +14,14 @@ export default function SearchAutocomplete({ countries: states }: { countries: A
                 }} >
                     <label className="text-3xl font-bold h-15 text-slate-100 items-center justify-start flex col-span-full" htmlFor="get_country">Get country</label>
                     <Autosuggest
-                        data={states.map((state) => {
+                        data={states.filter((state) => !countries.some((country) => country.country.name.official === state.country.name.official)).map((state) => {
                             return {
                                 country: state.country.name.official,
                                 flag: state.country.flag,
                                 data: state
                             }
                         })}
-                        onSelect={country => handleSelect(country)}
+                        onSelect={country => addCountry(country, daily)}
                     />
                 </form>
             </div>
