@@ -92,6 +92,8 @@ declare global {
 
     type T_Country_Single = {
         country: {
+            anthem: string;
+            coatOfArms: string;
             flag: {
                 alt: string;
                 src: string;
@@ -131,6 +133,11 @@ declare global {
     type T_Country_Merged = {
         region: string;
         subregion: string;
+        cca2: string;
+        coatOfArms: {
+            png: string;
+            svg: string;
+        };
         borders: Array<string>;
         gini: {
             [year: string]: number;

@@ -1,6 +1,6 @@
 export default async function getSingleCountry(nation: string) {
     const [response1, response2] = await Promise.all([
-        fetch(`${process.env.SINGLE_COUNTRY_API}${nation}?fields=continents,subregion,region,borders,gini`),
+        fetch(`${process.env.SINGLE_COUNTRY_API}${nation}?fields=continents,subregion,region,borders,gini,cca2,coatOfArms`),
         fetch(`${process.env.SINGLE_COUNTRY_API}${nation}?fields=name,independent,currencies,languages,area,population,timezones,flags,startOfWeek,car`)
     ])
     console.log(`single country ${process.env.SINGLE_CUNTRY_API}`)
@@ -11,6 +11,8 @@ export default async function getSingleCountry(nation: string) {
     }))[0]
     const country: T_Country_Single = {
         country: {
+            anthem: `${process.env.ANTHEM_API}${merged.cca2.toLowerCase()}.mp3`,
+            coatOfArms: merged.coatOfArms.png,
             flag: {
                 alt: merged.flags.alt,
                 src: merged.flags.png

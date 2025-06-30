@@ -1,6 +1,6 @@
 export default async function getAllCountries(): Promise<Array<T_Country_Single>> {
     const [response1, response2] = await Promise.all([
-        fetch(`${process.env.ALL_COUNTRIES_API}?fields=continents,subregion,region,borders,gini`),
+        fetch(`${process.env.ALL_COUNTRIES_API}?fields=continents,subregion,region,borders,gini,cca2,coatOfArms`),
         fetch(`${process.env.ALL_COUNTRIES_API}?fields=name,independent,currencies,languages,area,population,timezones,flags,startOfWeek,car`)
     ])
     const [data1, data2] = await Promise.all([response1.json(), response2.json()]);
@@ -8,9 +8,13 @@ export default async function getAllCountries(): Promise<Array<T_Country_Single>
         ...item,
         ...data2[index]
     }))
+
+
     const countries: Array<T_Country_Single> = merged.map((item: T_Country_Merged): T_Country_Single => {
         return {
             country: {
+                anthem: `${process.env.ANTHEM_API}${item.cca2.toLowerCase()}.mp3`,
+                coatOfArms: item.coatOfArms.png,
                 flag: {
                     alt: item.flags.alt,
                     src: item.flags.png
