@@ -16,10 +16,8 @@ export default async function getAllCountries(): Promise<Array<T_Country_Single>
         merged.map(async (item: T_Country_Merged): Promise<T_Country_Single> => {
             let description = '';
             try {
-                const res = await fetch(`${process.env.SHORT_DESCRIPTION_API}${item.name.common}`);
-                const json = await res.json();
-                const page = Object.values(json.query.pages)[0] as any;
-                description = page.extract ?? '';
+                const res = await fetch(`${process.env.SHORT_DESCRIPTION_API}${item.name.common}`).then(res => res.json()).then(res => `${Object.values(res.query.pages)[0]}`);
+                description = res;
             } catch (e) {
                 console.error(`Failed to fetch description for ${item.name.common}`, e);
             }
