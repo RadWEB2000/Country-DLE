@@ -16,12 +16,11 @@ export default async function getAllCountries(): Promise<Array<T_Country_Single>
         merged.map(async (item: T_Country_Merged): Promise<T_Country_Single> => {
             let description = '';
             try {
-                const res = await fetch(`${process.env.SHORT_DESCRIPTION_API}${item.name.common}`).then(res => res.json()).then(res => `${Object.values(res.query.pages)[0]}`);
-                description = res;
+                const response = await fetch(`${process.env.SHORT_DESCRIPTION_API}${item.name.common}`).then(res => res.json()).then((res: T_WikiCountry): string => Object.values(res.query.pages)[0].extract);
+                description = response;
             } catch (e) {
                 console.error(`Failed to fetch description for ${item.name.common}`, e);
             }
-
             return {
                 country: {
                     anthem: `${process.env.ANTHEM_API}${item.cca2.toLowerCase()}.mp3`,

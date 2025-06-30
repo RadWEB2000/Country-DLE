@@ -263,4 +263,17 @@ declare global {
         name: string;
         flag: string;
     }
+
+    type T_WikiCountry = {
+        query: {
+            pages: {
+                [pageId: string]: {
+                    pageid: number;
+                    ns: number;
+                    title: string;
+                    extract: string;
+                };
+            }
+        }
+    }
 }
