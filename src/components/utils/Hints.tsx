@@ -3,9 +3,9 @@
 import Image from "next/image";
 import { useState } from "react";
 import AudioPlayer from "./AudioPlayer";
+import { useCountryStore } from "@/store";
 
-type T_hints = {
-    attempts: number;
+type T_Hints = {
     coatOfArms: string;
     anthem: string;
     flag: {
@@ -14,25 +14,57 @@ type T_hints = {
     }
 }
 
-export default function Hints({ attempts, anthem, coatOfArms, flag }: T_hints) {
+type T_Button = {
+    title: string;
+    requiredAttempts: number;
+    tab: 'coatOfArms' | 'flag' | 'anthem'
+}
 
-    console.log(`anthem ${anthem}`)
+const buttons: Array<T_Button> = [
+    {
+        requiredAttempts: 5,
+        tab: 'coatOfArms',
+        title: 'Coat of Arms'
+    },
+    {
+        requiredAttempts: 10,
+        tab: 'anthem',
+        title: 'Anthem'
+    },
+    {
+        requiredAttempts: 15,
+        tab: 'flag',
+        title: 'Flag'
+    }
+]
+
+export default function Hints({ anthem, coatOfArms, flag }: T_Hints) {
+
     const [currentOpenedTab, setCurrentOpenedTab] = useState<'coatOfArms' | 'flag' | 'anthem' | null>(null)
+    const { countries } = useCountryStore();
 
-    return (
-        <div
-            className="bg-slate-50/90 h-fit rounded-xl mx-auto my-2 w-150 max-w-[95%] p-1"
-        >
-            <p className="text-center text-lg font-semibold" >Podopowiedzi</p>
-            <ul className="grid grid-cols-3 mt-4" >
-                <button onClick={() => setCurrentOpenedTab('coatOfArms')} className={`${currentOpenedTab === 'coatOfArms' && 'bg-slate-900 text-slate-50'} font-semibold text-sm rounded-md py-1 linear duration-200`} disabled={attempts < 5}>Herb - po 5 próbach</button>
-                <button onClick={() => setCurrentOpenedTab('anthem')} className={`${currentOpenedTab === 'anthem' && 'bg-slate-900 text-slate-50'} font-semibold text-sm rounded-md py-1  linear duration-200`} disabled={attempts < 10}>Hymn - po 10 próbach</button>
-                <button className={`${currentOpenedTab === 'flag' && 'bg-slate-900 text-slate-50'} font-semibold text-sm rounded-md py-1  linear duration-200`} onClick={() => setCurrentOpenedTab('flag')} disabled={attempts < 15}>Flaga - po 15 próbach</button>
-            </ul>
-            <div className={`${currentOpenedTab === null ? 'h-0 mt-0 p-0 opacity-0 invisible' : ' min-h-52 mt-1 p-2 opacity-100 visible '} flex items-center justify-center w-full   ease-in-out duration-200`}>
-                {/* some one */}
+    const Button = ({ requiredAttempts, tab, title }: T_Button) => {
+        return (
+            <button onClick={() => setCurrentOpenedTab(tab)} className={`${currentOpenedTab === tab ? 'bg-slate-900 text-slate-50' : 'hover:bg-slate-300 disabled:hover:bg-slate-300/0'}  font-semibold text-sm rounded-md py-1 linear duration-200 cursor-pointer disabled:cursor-default`} disabled={countries.length < requiredAttempts}>
+                <p>{title}</p>
                 {
-                    currentOpenedTab === 'coatOfArms' &&
+                    countries.length > requiredAttempts - 1 ? <> </> :
+                        <span className="text-sm font-medium" >{requiredAttempts - countries.length} attempts</span>
+                }
+            </button>
+        )
+    }
+
+    const Tabs = () => {
+        switch (currentOpenedTab) {
+            case 'anthem':
+                return (
+                    <div>
+                        <AudioPlayer anthem={anthem} />
+                    </div>
+                )
+            case 'coatOfArms':
+                return (
                     <Image
                         alt='Coat of Arms'
                         src={coatOfArms}
@@ -41,15 +73,9 @@ export default function Hints({ attempts, anthem, coatOfArms, flag }: T_hints) {
                         loading="eager"
                         priority
                     />
-                }
-                {
-                    currentOpenedTab === 'anthem' &&
-                    <div>
-                        <AudioPlayer anthem={anthem} />
-                    </div>
-                }
-                {
-                    currentOpenedTab === 'flag' &&
+                )
+            case 'flag':
+                return (
                     <Image
                         alt='Coat of Arms'
                         src={flag.src}
@@ -58,7 +84,31 @@ export default function Hints({ attempts, anthem, coatOfArms, flag }: T_hints) {
                         loading="eager"
                         priority
                     />
+                )
+            default:
+                return null;
+        }
+    }
+
+    return (
+        <div
+            className="bg-slate-50/90 h-fit rounded-xl mx-auto my-2 w-150 max-w-[95%] px-2 py-4"
+        >
+            <p className="text-center text-lg font-semibold" >Podopowiedzi {countries.length}</p>
+            <ul className="grid grid-cols-3 mt-4 gap-1" >
+                {
+                    buttons.map((item) => {
+                        return (
+                            <Button
+                                {...item}
+                                key={item.title}
+                            />
+                        )
+                    })
                 }
+            </ul>
+            <div className={`${currentOpenedTab === null ? 'h-0 mt-0 p-0 opacity-0 invisible' : ' min-h-40 mt-1 px-2 py-3 opacity-100 visible '} flex items-center justify-center w-full   ease-in-out duration-200`}>
+                <Tabs />
             </div>
         </div>
     )

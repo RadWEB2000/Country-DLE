@@ -12,7 +12,7 @@ export default async function GuessCountryPage() {
   return (
     <CountrySelectedProvider>
       <Statistics />
-      <Hints attempts={17} anthem={win.country.anthem} coatOfArms={win.country.coatOfArms} flag={win.country.flag} />
+      <Hints anthem={win.country.anthem} coatOfArms={win.country.coatOfArms} flag={win.country.flag} />
       <SearchAutocomplete countries={countries} />
       <main
         className="flex items-center flex-col justify-center my-8 mx-auto"

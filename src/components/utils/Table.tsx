@@ -13,15 +13,15 @@ export default function Table({ country }: { country: T_Country_Single }) {
 
     const { countries } = useCountryStore();
 
-     useEffect(() => {
-    const hasCorrectCountry = countries.some(
-      (c) => c.country.name.official === country.country.name.official
-    );
+    useEffect(() => {
+        const hasCorrectCountry = countries.some(
+            (c) => c.country.name.official === country.country.name.official
+        );
 
-    if (hasCorrectCountry && !alreadyScored(dailyId)) {
-      addScore(dailyId);
-    }
-  }, [countries, country, dailyId, addScore, alreadyScored]);
+        if (hasCorrectCountry && !alreadyScored(dailyId)) {
+            addScore(dailyId);
+        }
+    }, [countries, country, dailyId, addScore, alreadyScored]);
 
     return (
         <div className="w-[100rem] max-w-[95%] mx-auto relative cursor-default select-none" >
@@ -46,17 +46,10 @@ export default function Table({ country }: { country: T_Country_Single }) {
 
                     const isWin = state.name.official === country.country.name.official;
 
-
-                    console.log(`isWin ${isWin} Country ${state.name.common}`)
-
-                    // useEffect(() => {
-                    //     if (isWin) {
-                    //         addScore(dailyId);
-                    //     }
-                    // }, [isWin, addScore, dailyId]);
-
                     const compared = compareCountries(country, {
                         country: {
+                            anthem: state.anthem,
+                            coatOfArms: state.coatOfArms,
                             flag: state.flag,
                             independent: state.independent,
                             name: state.name

@@ -11,6 +11,8 @@ export default function SearchAutocomplete({ countries: states }: { countries: A
         addCountry(country, daily);
     }
 
+    const nations = states;
+
     return (
         <>
             <div className="w-[50rem] max-w-[90%] min-h-[25vh] mt-12 bg-green-200/0 mx-auto">
