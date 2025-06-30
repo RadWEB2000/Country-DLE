@@ -24,8 +24,8 @@ export default function Table({ country }: { country: T_Country_Single }) {
     }, [countries, country, dailyId, addScore, alreadyScored]);
 
     return (
-        <div className="w-[100rem] max-w-[95%] mx-auto relative cursor-default select-none" >
-            <ul className="grid grid-cols-14 mb-2 bg-slate-100 text-slate-900 items-center rounded-md justify-center py-6 px-2 text-center font-bold sticky top-5 text-sm gap-2 shadow-2xl z-[999]">
+        <div className="w-[100rem] max-w-[95%] mx-auto relative cursor-default select-none overflow-x-auto " >
+            <ul className="grid grid-cols-[repeat(14,_150px)] lg:grid-cols-14 lg:w-auto bg-slate-100 w-fit text-slate-900 items-center rounded-md justify-center py-6 px-4 text-center font-bold sticky top-5 text-sm gap-2 mb-6 shadow-2xl z-[999]">
                 <li>Country</li>
                 <li>Independent</li>
                 <li>Languages</li>

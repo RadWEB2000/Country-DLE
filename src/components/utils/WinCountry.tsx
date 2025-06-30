@@ -4,19 +4,19 @@ import AudioPlayer from "./AudioPlayer";
 export default function WinCountry({ country, culture, economy, geo }: T_Country_Single) {
     return (
         <section
-            className="text-white border-1 border-white/10 w-[100rem] max-w-[90%] mx-auto"
+            className="text-white my-8 w-[100rem] max-w-[90%] mx-auto"
         >
             <div
-                className="grid grid-cols-3"
+                className="lg:grid lg:grid-cols-3"
             >
                 <div className="col-span-2">
-                    <h2 className="text-8xl font-extrabold" >{country.name.common}</h2>
-                    <h3 className="text-3xl font-semibold mt-2" >{country.name.official}</h3>
-                    <h4 className="text-2xl opacity-50 mt-2" >{country.name.altSpellings}</h4>
+                    <h2 className="text-6xl font-extrabold text-center lg:text-start xl:text-8xl" >{country.name.common}</h2>
+                    <h3 className="text-2xl font-semibold mt-2 text-center lg:text-start xl:text-4xl" >{country.name.official}</h3>
+                    <h4 className="text-xl opacity-50 mt-2 text-center lg:text-start xl:text-2xl" >{country.name.altSpellings}</h4>
                     <p className="text-base leading-7 mt-6 text-justify" dangerouslySetInnerHTML={{ __html: country.description }} />
                 </div>
                 <div className="flex items-center justify-start flex-col p-3 space-y-8" >
-                    <div className="mx-auto" >
+                    <div className="mx-auto " >
                         <h4 className="text-xl text-center mb-1" >Coat of arms</h4>
                         <Image
                             alt={`Coat of arms - ${country.name.common}`}
@@ -28,13 +28,13 @@ export default function WinCountry({ country, culture, economy, geo }: T_Country
                             width={350}
                         />
                     </div>
-                    <div className="mx-auto w-full" >
+                    <div className="mx-auto w-full " >
                         <h4 className="text-xl text-center mb-1" >Anthem</h4>
-                        <div className="bg-slate-400 rounded-md w-[90%] mx-auto ">
+                        <div className="bg-slate-400 rounded-md w-[20rem] max-w-[80%] mx-auto ">
                             <AudioPlayer anthem={country.anthem} />
                         </div>
                     </div>
-                    <div className="mx-auto" >
+                    <div className="mx-auto " >
                         <h4 className="text-xl text-center mb-1" >Flag</h4>
                         <Image
                             alt={country.flag.alt}
@@ -65,7 +65,7 @@ export default function WinCountry({ country, culture, economy, geo }: T_Country
                 src={`https://maps.google.com/maps?q=${geo.latlng[0]},${geo.latlng[1]}&z=${6}&output=embed`}
             />
             <div
-                className="mt-3 grid grid-cols-3"
+                className="mt-3 grid grid-cols-1 space-y-5 md:grid-cols-2 lg:grid-cols-3"
             >
 
                 <div className="mx-auto w-fit" >
@@ -106,29 +106,6 @@ export default function WinCountry({ country, culture, economy, geo }: T_Country
                         >
                             <strong>Demonyms</strong>
                             <p className="text-end" >Male:{culture.demonyms.m}<br />Female:{culture.demonyms.f}</p>
-                        </li>
-                    </ul>
-                </div>
-                <div className="mx-auto w-fit">
-                    <h3 className="font-extrabold text-xl text-slate-300 mt-1 mb-3.5 text-center">Economy</h3>
-                    <ul className="space-y-3" >
-                        <li
-                            className="flex space-x-2 justify-between"
-                        >
-                            <strong>Gini</strong>
-                            <p>{economy.gini}</p>
-                        </li>
-                        <li
-                            className="flex space-x-2 justify-between"
-                        >
-                            <strong>Currencies</strong>
-                            <p className="capitalize" >{economy.currencies}</p>
-                        </li>
-                        <li
-                            className="flex space-x-2 justify-between"
-                        >
-                            <strong>Population</strong>
-                            <p className="capitalize" >{economy.population}</p>
                         </li>
                     </ul>
                 </div>
@@ -179,7 +156,29 @@ export default function WinCountry({ country, culture, economy, geo }: T_Country
                         </li>
                     </ul>
                 </div>
-
+                <div className="mx-auto w-fit">
+                    <h3 className="font-extrabold text-xl text-slate-300 mt-1 mb-3.5 text-center">Economy</h3>
+                    <ul className="space-y-3" >
+                        <li
+                            className="flex space-x-2 justify-between"
+                        >
+                            <strong>Gini</strong>
+                            <p>{economy.gini}</p>
+                        </li>
+                        <li
+                            className="flex space-x-2 justify-between"
+                        >
+                            <strong>Currencies</strong>
+                            <p className="capitalize" >{economy.currencies}</p>
+                        </li>
+                        <li
+                            className="flex space-x-2 justify-between"
+                        >
+                            <strong>Population</strong>
+                            <p className="capitalize" >{economy.population}</p>
+                        </li>
+                    </ul>
+                </div>
 
             </div>
 

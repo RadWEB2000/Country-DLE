@@ -95,7 +95,7 @@ export default function Hints({ anthem, coatOfArms, flag }: T_Hints) {
             className="bg-slate-50/90 h-fit rounded-xl mx-auto my-2 w-150 max-w-[95%] px-2 py-4"
         >
             <p className="text-center text-lg font-semibold" >Podopowiedzi</p>
-            <ul className="grid grid-cols-3 mt-4 gap-1" >
+            <ul className="flex flex-col sm:flex-row flex-wrap justify-around mt-4 gap-1" >
                 {
                     buttons.map((item) => {
                         return (

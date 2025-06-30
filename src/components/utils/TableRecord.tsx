@@ -27,7 +27,7 @@ export default function TableRecord({ compared, area, borders, continents, curre
 
 
     return (
-        <ul className={`grid grid-cols-14 bg-slate-700/10 my-2 items-center rounded-md justify-center px-2 py-1 text-center text-slate-100 odd:bg-slate-700/30 gap-2 ${isWin && 'win'}`}>
+        <ul className={`grid  grid-cols-[repeat(14,_150px)] lg:grid-cols-14 lg:w-auto bg-slate-700/10 w-fit my-2 items-center rounded-md justify-center px-2 py-1 text-center text-slate-100 odd:bg-slate-700/30 gap-2 ${isWin && 'win'}`}>
             <li className="cell flex flex-col items-center text-center justify-center !py-4" data-compare={compared.name}>
                 <Image
                     alt={flag.alt}
