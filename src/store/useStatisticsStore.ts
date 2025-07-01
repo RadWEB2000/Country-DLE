@@ -7,7 +7,10 @@ type T_StatisticsStore = {
     addScore: (dailyId: string) => void;
     alreadyScored: (dailyId: string) => boolean;
     lastScoredId: string;
+    guessedDailyId: string; 
     resetScore: () => void;
+    isTodayGuessed: (dailyId: string) => boolean;
+
 }
 
 const useStatisticsStore = create<T_StatisticsStore>()(
@@ -19,14 +22,17 @@ const useStatisticsStore = create<T_StatisticsStore>()(
                 if (get().lastScoredId !== dailyId) {
                     set((state) => ({
                         score: state.score + 1,
-                        lastScoredId: dailyId
+                        lastScoredId: dailyId,
+                        guessedDailyId: dailyId
                     }));
                 }
             },
              alreadyScored: (dailyId: string) => {
                 return get().lastScoredId === dailyId;
             },
+            guessedDailyId: '',
             resetScore: () => set({ score: 0, lastScoredId: '' }),
+            isTodayGuessed: (dailyId: string) => get().guessedDailyId === dailyId,
         }),
         {
             name: 'score'

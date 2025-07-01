@@ -3,11 +3,12 @@ import compareCountries from "@/lib/functions/compareCountries"
 import TableRecord from "./TableRecord"
 import { useCountryStore, useStatisticsStore } from "@/store";
 import { useEffect } from "react";
+import { getDailyId } from "@/lib/functions";
 
 export default function Table({ country }: { country: T_Country_Single }) {
 
 
-    const dailyId = new Date().toISOString().slice(0, 10);
+    const dailyId = getDailyId();
 
     const { addScore, alreadyScored } = useStatisticsStore();
 
