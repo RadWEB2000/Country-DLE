@@ -13,7 +13,7 @@ export default function WinCountry({ country, culture, economy, geo }: T_Country
                 className="text-white my-8 w-[100rem] max-w-[90%] mx-auto"
             >
                 <div
-                    className="lg:grid lg:grid-cols-3"
+                // className="lg:grid lg:grid-cols-3"
                 >
                     <div className="col-span-2">
                         <h2 className="text-6xl font-extrabold text-center lg:text-start xl:text-8xl" >{country.name.common}</h2>
@@ -21,18 +21,21 @@ export default function WinCountry({ country, culture, economy, geo }: T_Country
                         <h4 className="text-xl opacity-50 mt-2 text-center lg:text-start xl:text-2xl" >{country.name.altSpellings}</h4>
                         <p className="text-base leading-7 mt-6 text-justify" dangerouslySetInnerHTML={{ __html: country.description }} />
                     </div>
-                    <div className="flex items-center justify-start flex-col p-3 space-y-8" >
+                    <div className="flex items-center justify-start flex-col p-3 space-y-8 xl:grid xl:grid-cols-3" >
                         <div className="mx-auto " >
                             <h4 className="text-xl text-center mb-1" >Coat of arms</h4>
-                            <Image
-                                alt={`Coat of arms - ${country.name.common}`}
-                                src={country.coatOfArms}
-                                loading="eager"
-                                className="object-contain object-center"
-                                priority
-                                height={350}
-                                width={350}
-                            />
+                            {
+                                country.coatOfArms ?
+                                    <Image
+                                        alt={`Coat of arms - ${country.name.common}`}
+                                        src={country.coatOfArms}
+                                        loading="eager"
+                                        className="object-contain object-center"
+                                        priority
+                                        height={250}
+                                        width={250}
+                                    /> : <p className="text-neutral-300" >Coat of arms is unknown</p>
+                            }
                         </div>
                         <div className="mx-auto w-full " >
                             <h4 className="text-xl text-center mb-1" >Anthem</h4>
@@ -48,8 +51,8 @@ export default function WinCountry({ country, culture, economy, geo }: T_Country
                                 loading="eager"
                                 className="object-contain object-center mt-2"
                                 priority
-                                height={375}
-                                width={400}
+                                height={250}
+                                width={250}
                             />
                         </div>
                     </div>
