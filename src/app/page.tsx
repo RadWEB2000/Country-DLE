@@ -11,14 +11,10 @@ export default async function GuessCountryPage() {
 
   return (
     <CountrySelectedProvider>
-      {
-        false ? <WinCountry {...win} /> :
-          <>
-            <Statistics />
-            <Hints anthem={win.country.anthem} coatOfArms={win.country.coatOfArms} flag={win.country.flag} />
-            <SearchAutocomplete countries={countries} />
-          </>
-      }
+      <WinCountry {...win} />
+      <Statistics />
+      <Hints anthem={win.country.anthem} coatOfArms={win.country.coatOfArms} flag={win.country.flag} />
+      <SearchAutocomplete countries={countries} />
 
       <main
         className="flex items-center flex-col justify-center my-8 mx-auto"
