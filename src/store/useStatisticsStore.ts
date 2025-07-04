@@ -4,13 +4,10 @@ import { persist } from "zustand/middleware";
 
 type T_StatisticsStore = {
     score: number;
-    addScore: (dailyId: string) => void;
-    alreadyScored: (dailyId: string) => boolean;
     lastScoredId: string;
-    guessedDailyId: string; 
+    addScore: (dailyId: string) => void;
     resetScore: () => void;
     isTodayGuessed: (dailyId: string) => boolean;
-
 }
 
 const useStatisticsStore = create<T_StatisticsStore>()(
@@ -27,12 +24,8 @@ const useStatisticsStore = create<T_StatisticsStore>()(
                     }));
                 }
             },
-             alreadyScored: (dailyId: string) => {
-                return get().lastScoredId === dailyId;
-            },
-            guessedDailyId: '',
             resetScore: () => set({ score: 0, lastScoredId: '' }),
-            isTodayGuessed: (dailyId: string) => get().guessedDailyId === dailyId,
+            isTodayGuessed: (dailyId: string) => get().lastScoredId === dailyId,
         }),
         {
             name: 'score'

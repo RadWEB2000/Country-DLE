@@ -45,7 +45,7 @@ export default function CountrySelectedProvider({
         <CountrySelectedContext.Provider
             value={{
                 countries: countriesList,
-                updateCountries: updateCountries
+                updateCountries: updateCountries,
             }}
         >
             {children}

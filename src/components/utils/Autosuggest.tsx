@@ -12,10 +12,11 @@ type AutocompleteItem = {
 
 type Props = {
     data: Array<AutocompleteItem>;
-    onSelect: (item: T_Country_Single) => void
+    onSelect: (item: T_Country_Single) => void;
+    isDisabled?: boolean;
 }
 
-export default function Autosuggest({ data, onSelect }: Props) {
+export default function Autosuggest({ data, onSelect, isDisabled }: Props) {
 
     const {
         query,
@@ -28,7 +29,7 @@ export default function Autosuggest({ data, onSelect }: Props) {
 
     return (
         <div className="relative w-full" ref={containerRef} >
-            <input value={query} onChange={(e) => { setQuery(e.target.value); setShow(true) }} placeholder="Start typing to find country..." type="text" className="capitalize w-full rounded-md border border-stone-300 text-slate-50 text-sm p-2 outline-none focus:ring focus:ring-stone-400" />
+            <input value={query} disabled={isDisabled} onChange={(e) => { setQuery(e.target.value); setShow(true) }} placeholder="Start typing to find country..." type="text" className="capitalize w-full rounded-md border border-stone-300 text-slate-50 text-sm p-2 outline-none focus:ring focus:ring-stone-400" />
             {
                 show && results.length > 0 && (
                     <ul className="absolute z-[9999] mt-1 max-h-60 w-full overflow-auto rounded-md border bg-slate-50 shadow-lg" >

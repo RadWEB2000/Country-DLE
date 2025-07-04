@@ -10,7 +10,7 @@ export default function Table({ country }: { country: T_Country_Single }) {
 
     const dailyId = getDailyId();
 
-    const { addScore, alreadyScored } = useStatisticsStore();
+    const { addScore, isTodayGuessed } = useStatisticsStore();
 
     const { countries } = useCountryStore();
 
@@ -19,10 +19,12 @@ export default function Table({ country }: { country: T_Country_Single }) {
             (c) => c.country.name.official === country.country.name.official
         );
 
-        if (hasCorrectCountry && !alreadyScored(dailyId)) {
+        if (hasCorrectCountry && !isTodayGuessed(dailyId)) {
             addScore(dailyId);
         }
-    }, [countries, country, dailyId, addScore, alreadyScored]);
+    }, [countries, country, dailyId, addScore]);
+
+    console.log(`guessed?`, isTodayGuessed(dailyId))
 
     return (
         <div className="w-[100rem] max-w-[95%] mx-auto relative cursor-default select-none overflow-x-auto " >
